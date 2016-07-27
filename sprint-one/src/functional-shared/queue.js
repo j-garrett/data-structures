@@ -10,7 +10,7 @@ var Queue = function() {
   return newQueue;
 };
 
-qMethods = {};
+var qMethods = {};
 
 qMethods.enqueue = function(value) {
   this.storage[this.qCounter] = value;

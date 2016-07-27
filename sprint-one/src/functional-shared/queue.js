@@ -1,30 +1,33 @@
 var Queue = function() {
   // Hey! Rewrite in the new style. Your code will wind up looking very similar,
   // but try not not reference your old code in writing the new style.
+  var newQueue = {};
+  newQueue.storage = {};
+  newQueue.qCounter = 0;
 
+  _.extend(newQueue, qMethods);
+
+  return newQueue;
 };
 
-var queueMethods = {};
+qMethods = {};
 
-queueMethods.enqueue = function() {
-
+qMethods.enqueue = function(value) {
+  this.storage[this.qCounter] = value;
+  this.qCounter++;
 };
 
-queueMethods.dequeue = function() {
+qMethods.dequeue = function() {
+  var key = Object.keys(this.storage)[0];
+  var removed = this.storage[key];
+  delete this.storage[key];
 
+  return removed;
 };
 
-queueMethods.size = function() {
-  return Object.keys(this).length < 0 ? 0 : Object.keys(this).length;
+qMethods.size = function() {
+  var qLength = Object.keys(this.storage).length;
+  return qLength >= 0 ? qLength : 0;
 };
-
-queueMethods.qCounter = 0;
-
-var extend = function(to, from) {
-  for (var key in from) {
-    to[key] = from[key];
-  }
-};
-
 
 

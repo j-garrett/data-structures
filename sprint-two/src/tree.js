@@ -13,11 +13,27 @@ var treeMethods = {};
 
 treeMethods.addChild = function(value) {
   // your code here
-  newTree.children.push(new Tree(value));  // fix me
+  this.children.push(Tree(value)); 
+   // fix me
 };
 
 treeMethods.contains = function(target) {
+  //recursively search the tree for target
+  //return boolean for search result
+  // debugger;
+  var result = [];
+  if (this.value === target) {
+    result.push(true);
+  } 
+  if (this.children.length > 0) {
+    this.children.forEach( (child) => {
+      result = result.concat(child.contains(target));
+    });
+  }
+//debugger;
+  return result.indexOf(true) !== -1 ? true : false;
 };
+
 
 
 

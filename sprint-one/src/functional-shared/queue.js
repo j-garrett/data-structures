@@ -3,7 +3,7 @@ var Queue = function() {
   // but try not not reference your old code in writing the new style.
   var newQueue = {};
   newQueue.storage = {};
-  newQueue.qCounter = 0;
+  newQueue.qCounters = [0, 0];
 
   _.extend(newQueue, qMethods);
 
@@ -13,21 +13,19 @@ var Queue = function() {
 var qMethods = {};
 
 qMethods.enqueue = function(value) {
-  this.storage[this.qCounter] = value;
-  this.qCounter++;
+  this.storage[this.qCounters[1]] = value;
+  this.qCounters[1]++;
 };
 
 qMethods.dequeue = function() {
-  var key = Object.keys(this.storage)[0];
-  var removed = this.storage[key];
-  delete this.storage[key];
-
+  var removed = this.storage[this.qCounters[0]];
+  delete removed;
+  this.qCounters[0]++;
   return removed;
 };
 
 qMethods.size = function() {
-  var qLength = Object.keys(this.storage).length;
-  return qLength >= 0 ? qLength : 0;
+  return this.qCounters[1] - this.qCounters[0] > 0 ? this.qCounters[1] - this.qCounters[0] : 0;
 };
 
 

@@ -2,24 +2,22 @@ var Queue = function() {
   // Hey! Rewrite in the new style. Your code will wind up looking very similar,
   // but try not not reference your old code in writing the new style.
   this.storage = {};
-  this.qCounter = 0;
+  this.qCounters = [0, 0];
 };
 
 
 Queue.prototype.enqueue = function(value) {
-  this.storage[this.qCounter] = value;
-  this.qCounter++;
+  this.storage[this.qCounters[1]] = value;
+  this.qCounters[1]++;
 };
 
 Queue.prototype.dequeue = function() {
-  var key = Object.keys(this.storage)[0];
-  var removed = this.storage[key];
-  delete this.storage[key];
-
+  var removed = this.storage[this.qCounters[0]];
+  delete removed;
+  this.qCounters[0]++;
   return removed;
 };
 
 Queue.prototype.size = function() {
-  var qLength = Object.keys(this.storage).length;
-  return qLength >= 0 ? qLength : 0;
+  return this.qCounters[1] - this.qCounters[0] > 0 ? this.qCounters[1] - this.qCounters[0] : 0;
 };

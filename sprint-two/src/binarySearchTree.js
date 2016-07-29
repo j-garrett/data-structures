@@ -39,9 +39,6 @@ bTreeMethods.contains = function(val) {
 
 bTreeMethods.depthFirstLog = function(callback) {
   callback(this.value);
-  //call callback on each value in the tree
-  //keep results, return results at the end
-  // debugger;
 
   if (this.right !== undefined) {
     this.right.depthFirstLog(callback);
@@ -55,3 +52,5 @@ bTreeMethods.depthFirstLog = function(callback) {
 /*
  * Complexity: What is the time complexity of the above functions?
  */
+// for children, do callback on them
+// for children, run this function on them

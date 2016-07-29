@@ -2,10 +2,12 @@
 
 var HashTable = function() {
   this._limit = 8;
+  this._taken = 0;
   this._storage = LimitedArray(this._limit);
 };
 
 HashTable.prototype.insert = function(k, v) {
+  this.resize();
   var index = getIndexBelowMaxForKey(k, this._limit);
 
   if (this[index]) {
@@ -14,6 +16,7 @@ HashTable.prototype.insert = function(k, v) {
   } else {
     this[index] = v;
   }
+  this._taken++;
 };
 
 HashTable.prototype.retrieve = function(k) {
@@ -34,7 +37,7 @@ HashTable.prototype.retrieve = function(k) {
 
 HashTable.prototype.remove = function(k) {
   var index = getIndexBelowMaxForKey(k, this._limit);
-
+  this.resize();
   if (Array.isArray(this[index])) {
     var arrays = this[index];
     for (var i = 0; i < arrays.length; i++) {
@@ -46,10 +49,18 @@ HashTable.prototype.remove = function(k) {
   } else {
     delete this[index];
   }
-
+  this._taken--;
 };
 
-
+HashTable.prototype.resize = function() {
+  var percentFull = this._taken / this._limit;
+  if (percentFull >= 0.75) {
+    this._limit *= 2;
+  }
+  if (percentFull <= 0.25) {
+    this._limit /= 2;
+  }
+};
 
 /*
  * Complexity: What is the time complexity of the above functions?

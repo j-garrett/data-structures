@@ -2,7 +2,6 @@ describe('hashTable', function() {
   var hashTable;
   var people = [['Steven', 'Tyler'], ['George', 'Harrison'], ['Mr.', 'Doob'], ['Dr.', 'Sunshine'], ['John', 'Resig'], ['Brendan', 'Eich'], ['Alan', 'Turing']];
 
-
   beforeEach(function() {
     hashTable = new HashTable();
   });
@@ -72,5 +71,36 @@ describe('hashTable', function() {
     hashTable.remove('John');
     hashTable.remove('Mr.');
     expect(hashTable._limit).to.equal(8);
+  });
+
+  it ('should reassign hash keys when the hash table is resized', function() {
+    var firstHalf = people.slice(0, 4);
+    var secondHalf = people.slice(4);
+
+    _.each(firstHalf, function(person) {
+      var firstName = person[0];
+      var lastName = person[1];
+      hashTable.insert(firstName, lastName);
+    });
+
+    var idx1 = hashTable[1];
+    var idx2 = hashTable[3];
+    var idx3 = hashTable[4];
+
+    expect(idx1).to.equal(hashTable[1]);
+    expect(idx2).to.equal(hashTable[3]);
+    expect(idx3).to.equal(hashTable[4]);
+
+    _.each(secondHalf, function(person) {
+      var firstName = person[0];
+      var lastName = person[1];
+      hashTable.insert(firstName, lastName);
+    });
+
+    expect(hashTable.retrieve('Steven')).to.equal('Tyler');
+
+    expect(idx1).to.not.equal(hashTable[1]);
+    expect(idx2).to.not.equal(hashTable[3]);
+    expect(idx3).to.not.equal(hashTable[4]);
   });
 });

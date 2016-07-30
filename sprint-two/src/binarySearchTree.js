@@ -52,14 +52,6 @@ bTreeMethods.breadthFirstLog = function(callback) {
   var results = [];
   var children = [];
   var firstTime = true;
-  debugger;
-  //push each node to results with [tier, value]
-  //from there, sort array and return an array with all the values
-  
-  //for a node, push its children to a children array
-  // .left always gets pushed first, .right pushed second for a given node
-  // then, iterate through children and repeat
-  //at the end, nodes will be in order and iterate through with to return values
   
   var recurseBreadth = function(node) {
     results.push(node.value);
@@ -87,5 +79,3 @@ bTreeMethods.breadthFirstLog = function(callback) {
 /*
  * Complexity: What is the time complexity of the above functions?
  */
-// for children, do callback on them
-// for children, run this function on them

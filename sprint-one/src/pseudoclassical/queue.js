@@ -21,3 +21,11 @@ Queue.prototype.dequeue = function() {
 Queue.prototype.size = function() {
   return this.qCounters[1] - this.qCounters[0] > 0 ? this.qCounters[1] - this.qCounters[0] : 0;
 };
+
+
+
+var names = new Queue();
+
+names.enqueue('joe');
+names.enqueue('jon');
+console.log(names);

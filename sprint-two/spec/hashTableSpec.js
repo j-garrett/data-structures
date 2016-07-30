@@ -83,13 +83,8 @@ describe('hashTable', function() {
       hashTable.insert(firstName, lastName);
     });
 
-    var idx1 = hashTable[1];
-    var idx2 = hashTable[3];
-    var idx3 = hashTable[4];
-
-    expect(idx1).to.equal(hashTable[1]);
-    expect(idx2).to.equal(hashTable[3]);
-    expect(idx3).to.equal(hashTable[4]);
+    var firstHalfKey = getIndexBelowMaxForKey('Steven', hashTable._limit);
+    expect(hashTable.retrieve('Steven')).to.equal('Tyler');
 
     _.each(secondHalf, function(person) {
       var firstName = person[0];
@@ -97,10 +92,11 @@ describe('hashTable', function() {
       hashTable.insert(firstName, lastName);
     });
 
+    var secondHalfKey = getIndexBelowMaxForKey('Steven', hashTable._limit);
     expect(hashTable.retrieve('Steven')).to.equal('Tyler');
+    expect(firstHalfKey).to.not.equal(secondHalfKey);
+    expect(hashTable._taken).to.equal(7);
 
-    expect(idx1).to.not.equal(hashTable[1]);
-    expect(idx2).to.not.equal(hashTable[3]);
-    expect(idx3).to.not.equal(hashTable[4]);
+
   });
 });

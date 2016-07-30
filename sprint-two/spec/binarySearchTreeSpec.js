@@ -30,7 +30,7 @@ describe('binarySearchTree', function() {
 
   it('should execute a callback on every value in a tree using "depthFirstLog"', function() {
     var array = [];
-    var func = function(value) { array.push(value); };
+    var func = function(value) { array.push(value.value); };
     binarySearchTree.insert(2);
     binarySearchTree.insert(3);
     binarySearchTree.depthFirstLog(func);
@@ -39,7 +39,7 @@ describe('binarySearchTree', function() {
 
   it('should execute a callback on every value in a tree using "breadthFirstLog"', function() {
     var array = [];
-    var func = function(value) { array.push(value); };
+    var func = function(value) { array.push(value.value); };
 
     binarySearchTree.insert(8);
     binarySearchTree.insert(7);
@@ -48,7 +48,62 @@ describe('binarySearchTree', function() {
     binarySearchTree.insert(3);
     binarySearchTree.insert(1);
     binarySearchTree.breadthFirstLog(func);
+
     expect(array).to.eql([5, 4, 8, 3, 7, 9, 1]);
+  });
+
+  it('should return the count of all node depths', function() {
+
+    binarySearchTree.insert(8);
+    binarySearchTree.insert(7);
+    binarySearchTree.insert(9);
+    binarySearchTree.insert(4);
+    binarySearchTree.insert(3);
+    binarySearchTree.insert(1);
+    var array = binarySearchTree.depthCount();
+
+    expect(array[0]).to.eql([1, 2, 3, 1]);
+  });
+
+  it('should return the minimum depth', function() {
+
+    binarySearchTree.insert(8);
+    binarySearchTree.insert(7);
+    binarySearchTree.insert(9);
+    binarySearchTree.insert(4);
+    binarySearchTree.insert(3);
+    binarySearchTree.insert(1);
+    var array = binarySearchTree.depthCount();
+ 
+    expect(array[1]).to.eql(3);
+  });
+
+  it('should return the maximum depth', function() {
+
+    binarySearchTree.insert(8);
+    binarySearchTree.insert(7);
+    binarySearchTree.insert(9);
+    binarySearchTree.insert(4);
+    binarySearchTree.insert(3);
+    binarySearchTree.insert(1);
+    var array = binarySearchTree.depthCount();
+
+    expect(array[2]).to.eql(4);
+  });
+
+  it('should return the nodes sorted by value', function() {
+
+    binarySearchTree.insert(8);
+    binarySearchTree.insert(7);
+    binarySearchTree.insert(9);
+    binarySearchTree.insert(4);
+    binarySearchTree.insert(3);
+    binarySearchTree.insert(1);
+    var array = binarySearchTree.depthCount();
+    var toSort = array[3].slice(0);
+    var sorted = binarySearchTree.rebalance(toSort);
+
+    expect(sorted[0]).to.not.eql(array[3]);
   });
 
 });

@@ -46,6 +46,41 @@ bTreeMethods.depthFirstLog = function(callback) {
   if (this.left !== undefined) {
     this.left.depthFirstLog(callback);
   }
+};
+
+bTreeMethods.breadthFirstLog = function(callback) {
+  var results = [];
+  var children = [];
+  var firstTime = true;
+  debugger;
+  //push each node to results with [tier, value]
+  //from there, sort array and return an array with all the values
+  
+  //for a node, push its children to a children array
+  // .left always gets pushed first, .right pushed second for a given node
+  // then, iterate through children and repeat
+  //at the end, nodes will be in order and iterate through with to return values
+  
+  var recurseBreadth = function(node) {
+    results.push(node.value);
+    if (node.left) {
+      children.push(node.left);
+    }
+    if (node.right) {
+      children.push(node.right);
+    }
+    if (children.length > 0) {
+      recurseBreadth(children.shift());
+    }
+  };
+  if (firstTime) {
+    recurseBreadth(this);
+    firstTime = false;
+  }
+
+  _.each(results, function(item) {
+    callback(item);
+  });
 
 };
 
